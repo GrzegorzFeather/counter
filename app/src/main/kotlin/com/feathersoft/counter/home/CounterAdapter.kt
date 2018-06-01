@@ -12,6 +12,8 @@ class CounterAdapter : RecyclerView.Adapter<CounterAdapter.CounterViewHolder>() 
 
   val counters: MutableList<Counter> = mutableListOf()
 
+  var selectionListener : ((Counter) -> Unit)? = null
+
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CounterViewHolder {
     return CounterViewHolder(parent
         .context
@@ -22,12 +24,20 @@ class CounterAdapter : RecyclerView.Adapter<CounterAdapter.CounterViewHolder>() 
   override fun getItemCount() = counters.size
 
   override fun onBindViewHolder(holder: CounterViewHolder, position: Int) {
-    holder.bind(counters[position])
+    val counter = counters[position]
+    holder.bind(counter)
+    holder.itemView.setOnClickListener({
+      selectionListener?.invoke(counter)
+    })
   }
 
   fun addCounter(counter: Counter) {
     counters += counter
     notifyItemChanged(counters.size)
+  }
+
+  fun withSelectionListener(listener: (Counter) -> Unit) {
+    selectionListener = listener
   }
 
   class CounterViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
