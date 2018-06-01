@@ -4,6 +4,7 @@ buildscript {
     androidx_version = '1.0.0-alpha1'
     material_version = '1.0.0-alpha1'
     dagger_version = '2.+'
+    retrofit_version = '2.4.+'
   }
 
   repositories {
