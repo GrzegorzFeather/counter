@@ -3,7 +3,6 @@ package com.feathersoft.counter.core.architecture
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
-import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -28,6 +27,6 @@ class NetworkModule(private val baseUrl: String) {
           .baseUrl(baseUrl)
           .client(okHttpClient)
           .addConverterFactory(GsonConverterFactory.create(gson))
-          .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
+          .addCallAdapterFactory(RxJava2CallAdapterFactory.createAsync())
           .build()
 }

@@ -31,6 +31,12 @@ class CounterAdapter : RecyclerView.Adapter<CounterAdapter.CounterViewHolder>() 
     })
   }
 
+  fun refreshCounters(newCounters: List<Counter>) {
+    counters.clear();
+    counters.addAll(newCounters)
+    notifyDataSetChanged()
+  }
+
   fun addCounter(counter: Counter) {
     counters += counter
     notifyItemChanged(counters.size)

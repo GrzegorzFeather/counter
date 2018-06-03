@@ -38,5 +38,11 @@ class HomeActivity : BaseActivity() {
     findViewById<FloatingActionButton>(R.id.home_button_add).setOnClickListener {
       counterAdapter.addCounter(Counter("Counter # ${++counter}"))
     }
+
+    handleDisposable(Counter.api(retrofit)
+        .all()
+        .subscribe(
+            { counterAdapter.refreshCounters(it) },
+            { Snackbar.make(countersRecycler, "Failed to load: ${it.message}", Snackbar.LENGTH_SHORT).show() }))
   }
 }
