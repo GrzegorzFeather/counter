@@ -1,15 +1,15 @@
 package com.feathersoft.counter.home
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.feathersoft.counter.R
+import com.feathersoft.counter.core.architecture.BaseActivity
 import com.feathersoft.counter.core.model.Counter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 
-class HomeActivity : AppCompatActivity() {
+class HomeActivity : BaseActivity() {
 
   private lateinit var countersRecycler: RecyclerView
 
@@ -19,6 +19,7 @@ class HomeActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+
     setContentView(R.layout.activity_home)
 
     countersRecycler = findViewById(R.id.home_recycler_counters)
