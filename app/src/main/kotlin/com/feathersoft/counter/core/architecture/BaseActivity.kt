@@ -2,7 +2,6 @@ package com.feathersoft.counter.core.architecture
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.feathersoft.counter.CounterApplication
 import retrofit2.Retrofit
 import javax.inject.Inject
 
@@ -12,7 +11,7 @@ abstract class BaseActivity : AppCompatActivity() {
   lateinit var retrofit: Retrofit
 
   override fun onCreate(savedInstanceState: Bundle?) {
-    CounterApplication.appComponent.inject(this@BaseActivity)
+//    CounterApplication.appComponent.inject(this@BaseActivity)
     super.onCreate(savedInstanceState)
   }
 
