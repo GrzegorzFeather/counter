@@ -1,6 +1,9 @@
 package com.feathersoft.counter.home
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.feathersoft.counter.R
@@ -12,6 +15,7 @@ import com.google.android.material.snackbar.Snackbar
 class HomeActivity : BaseActivity() {
 
   private lateinit var countersRecycler: RecyclerView
+  private lateinit var toolbar: Toolbar
 
   private val counterAdapter = CounterAdapter()
 
@@ -22,7 +26,10 @@ class HomeActivity : BaseActivity() {
 
     setContentView(R.layout.activity_home)
 
+    toolbar = findViewById(R.id.home_toolbar)
     countersRecycler = findViewById(R.id.home_recycler_counters)
+
+    setSupportActionBar(toolbar)
 
     countersRecycler.adapter = counterAdapter
     countersRecycler.layoutManager = LinearLayoutManager(
@@ -39,6 +46,26 @@ class HomeActivity : BaseActivity() {
       counterAdapter.addCounter(Counter("Counter # ${++counter}"))
     }
 
+    load()
+  }
+
+  override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    menuInflater.inflate(R.menu.home, menu)
+    return true
+  }
+
+  override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+    return when(item?.itemId) {
+      R.id.action_refresh -> {
+        load()
+        true
+      }
+      else -> super.onOptionsItemSelected(item)
+    }
+
+  }
+
+  private fun load() {
     handleDisposable(Counter.api(retrofit)
         .all()
         .subscribe(
