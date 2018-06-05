@@ -6,6 +6,7 @@ import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.feathersoft.counter.R
 import com.feathersoft.counter.core.architecture.BaseActivity
 import com.feathersoft.counter.core.model.Counter
@@ -15,8 +16,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 
 class HomeActivity : BaseActivity() {
 
-  private lateinit var countersRecycler: RecyclerView
   private lateinit var toolbar: Toolbar
+  private lateinit var countersRecycler: RecyclerView
+  private lateinit var refreshLayout: SwipeRefreshLayout
 
   private val counterAdapter = CounterAdapter()
 
@@ -29,8 +31,11 @@ class HomeActivity : BaseActivity() {
 
     toolbar = findViewById(R.id.home_toolbar)
     countersRecycler = findViewById(R.id.home_recycler_counters)
+    refreshLayout = findViewById(R.id.home_refresh)
 
     setSupportActionBar(toolbar)
+
+    refreshLayout.setOnRefreshListener { load() }
 
     countersRecycler.adapter = counterAdapter
     countersRecycler.layoutManager = LinearLayoutManager(
@@ -77,7 +82,10 @@ class HomeActivity : BaseActivity() {
         .all()
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(
-            { counterAdapter.refreshCounters(it) },
+            {
+              refreshLayout.isRefreshing = false
+              counterAdapter.refreshCounters(it)
+            },
             { Snackbar.make(countersRecycler, "Failed to load: ${it.message}", Snackbar.LENGTH_SHORT).show() }))
   }
 }
