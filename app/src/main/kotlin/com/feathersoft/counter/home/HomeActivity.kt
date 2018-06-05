@@ -44,7 +44,13 @@ class HomeActivity : BaseActivity() {
     }
 
     findViewById<FloatingActionButton>(R.id.home_button_add).setOnClickListener {
-      counterAdapter.addCounter(Counter("Counter # ${++counter}"))
+      Counter.api(retrofit)
+          .create(Counter("New counter"))
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe(
+              { counterAdapter.addCounter(it) },
+              { Snackbar.make(countersRecycler, "Failed to add counter: ${it.message}", Snackbar.LENGTH_SHORT).show() }
+          )
     }
 
     load()

@@ -2,7 +2,9 @@ package com.feathersoft.counter.core.model
 
 import io.reactivex.Observable
 import retrofit2.Retrofit
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 
 data class Counter(val name: String) {
 
@@ -17,5 +19,8 @@ data class Counter(val name: String) {
   interface Schema {
     @GET(path)
     fun all(): Observable<List<Counter>>
+
+    @POST(path)
+    fun create(@Body counter: Counter): Observable<Counter>
   }
 }
