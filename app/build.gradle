@@ -27,6 +27,20 @@ android {
   sourceSets {
     main.java.srcDirs += 'src/main/kotlin'
   }
+
+  flavorDimensions "api"
+
+  productFlavors {
+    dev {
+      dimension "api"
+      buildConfigField "String", "ENDPOINT", "\"http://0.0.0.0:3000/\""
+    }
+
+    prod {
+      dimension "api"
+      buildConfigField "String", "ENDPOINT", "\"https://countonme.herokuapp.com/counters/\""
+    }
+  }
 }
 
 dependencies {

@@ -11,6 +11,7 @@ import com.feathersoft.counter.core.architecture.BaseActivity
 import com.feathersoft.counter.core.model.Counter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
+import io.reactivex.android.schedulers.AndroidSchedulers
 
 class HomeActivity : BaseActivity() {
 
@@ -55,7 +56,7 @@ class HomeActivity : BaseActivity() {
   }
 
   override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-    return when(item?.itemId) {
+    return when (item?.itemId) {
       R.id.action_refresh -> {
         load()
         true
@@ -68,6 +69,7 @@ class HomeActivity : BaseActivity() {
   private fun load() {
     handleDisposable(Counter.api(retrofit)
         .all()
+        .observeOn(AndroidSchedulers.mainThread())
         .subscribe(
             { counterAdapter.refreshCounters(it) },
             { Snackbar.make(countersRecycler, "Failed to load: ${it.message}", Snackbar.LENGTH_SHORT).show() }))

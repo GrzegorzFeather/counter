@@ -17,7 +17,7 @@ class CounterApplication : Application() {
     appComponent = DaggerAppComponent
         .builder()
         .architectureModule(ArchitectureModule())
-        .networkModule(NetworkModule("http://0.0.0.0:3000"))
+        .networkModule(NetworkModule(BuildConfig.ENDPOINT))
         .build()
   }
 }
