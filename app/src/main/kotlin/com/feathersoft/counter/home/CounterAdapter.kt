@@ -54,7 +54,7 @@ class CounterAdapter : RecyclerView.Adapter<CounterAdapter.CounterViewHolder>() 
     }
 
     fun bind(counter: Counter) {
-      counterNameTextView.text = counter.name
+      counterNameTextView.text = "${counter.name} #${counter.id}"
     }
   }
 }
