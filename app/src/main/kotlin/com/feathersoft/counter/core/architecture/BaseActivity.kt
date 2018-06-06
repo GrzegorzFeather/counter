@@ -21,4 +21,9 @@ abstract class BaseActivity : AppCompatActivity() {
   }
 
   fun handleDisposable(disposable: Disposable) = compositeDisposable.add(disposable)
+
+  override fun onDestroy() {
+    compositeDisposable.clear()
+    super.onDestroy()
+  }
 }

@@ -10,7 +10,7 @@ import com.feathersoft.counter.core.util.layoutInflater
 
 class CounterAdapter : RecyclerView.Adapter<CounterAdapter.CounterViewHolder>() {
 
-  val counters: MutableList<Counter> = mutableListOf()
+  private val counters: MutableList<Counter> = mutableListOf()
 
   var selectionListener : ((Counter) -> Unit)? = null
 
